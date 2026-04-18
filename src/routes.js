@@ -37,6 +37,10 @@ router.delete('/recipes/:id', async (req, res) => {
 router.post('/recipes', async (req, res) => {
 	const db = await getDbConnection()
 	const { title, ingredients, method } = req.body
+	if (!title || !title.trim()) {
+		const recipes = await db.all('SELECT * FROM recipes')
+		return res.status(400).render('recipes', { recipes, error: 'Title is required' })
+	}
 	await db.run('INSERT INTO recipes (title, ingredients, method) VALUES (?, ?, ?)', [title, ingredients, method])
 	res.redirect('/recipes')
 })

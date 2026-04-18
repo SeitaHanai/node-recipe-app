@@ -7,6 +7,9 @@
     <!-- Add Recipe Form (initially hidden) -->
     <div id="add-recipe-form" class="recipe-form" style="display: none;">
         <h2>Add New Recipe</h2>
+        {{#if error}}
+            <div class="error-message">{{error}}</div>
+        {{/if}}
         <form action="/recipes" method="POST">
             <div class="form-group">
                 <label for="title">Recipe Title:</label>
@@ -62,4 +65,9 @@ function hideAddForm() {
     document.getElementById('add-recipe-form').style.display = 'none';
     document.querySelector('#add-recipe-form form').reset();
 }
+
+// If there is a server-side error, show the form automatically
+{{#if error}}
+document.addEventListener('DOMContentLoaded', function() { showAddForm(); });
+{{/if}}
 </script>
