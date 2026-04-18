@@ -47,6 +47,12 @@ initializeDb().catch(console.error)
 
 app.use('/', routes)
 
+// Central error-handling middleware — catches any error forwarded via next(err)
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+	console.error(err)
+	res.status(500).send('Internal Server Error')
+})
+
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
 })
